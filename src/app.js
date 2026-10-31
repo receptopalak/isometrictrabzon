@@ -194,4 +194,5 @@ addEventListener('resize',()=>{
  camera.updateProjectionMatrix();
 });
 function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera);}
+window.isometricTrabzon={camera,renderer,controls,point,heightAt};
 resetCamera();animate();load();
