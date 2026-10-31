@@ -31,6 +31,8 @@ CURATED = [
     "File:Trabzon Meydan 2.jpg",
     "File:Ataturk statue, Trabzon Meydan.jpg",
     "File:Trabzon Meydan Parkı Atatürk Heykeli 0005.jpg",
+    "File:City governor's office, Trabzon.jpg",
+    "File:City governor's office 2, Trabzon.jpg",
 ]
 LICENSE_PREFIXES = ("CC BY", "CC-BY", "PUBLIC DOMAIN", "CC0", "PD-")
 HEADERS = {
@@ -145,6 +147,8 @@ def collect():
             ("Trabzon Meydan Park (4).jpg", "Radosław Botev", "CC BY 3.0 PL", "https://creativecommons.org/licenses/by/3.0/pl/"),
             ("Trabzon Meydan 2.jpg", "edkohler", "CC BY 2.0", "https://creativecommons.org/licenses/by/2.0/"),
             ("Ataturk statue, Trabzon Meydan.jpg", "PlanetKorriban", "CC BY-SA 2.0", "https://creativecommons.org/licenses/by-sa/2.0/"),
+            ("City governor's office, Trabzon.jpg", "PlanetKorriban", "CC BY-SA 2.0", "https://creativecommons.org/licenses/by-sa/2.0/"),
+            ("City governor's office 2, Trabzon.jpg", "PlanetKorriban", "CC BY-SA 2.0", "https://creativecommons.org/licenses/by-sa/2.0/"),
             ("Trabzon Meydan Parkı Atatürk Heykeli 0005.jpg", "Dosseman", "CC BY-SA 4.0", "https://creativecommons.org/licenses/by-sa/4.0/"),
         ]
         for filename, author, license_name, license_url in seeds:
