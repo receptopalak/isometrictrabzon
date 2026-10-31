@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111d24">
+  <title>Isometric Trabzon · Gerçek Geometrili Pilot</title>
+  <style>
+    :root { color-scheme: dark; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; --ink:#e8efe9; --dim:#a5bab7; --line:#29424a; --teal:#8fd9c8; }
+    * {box-sizing:border-box} html,body{height:100%;margin:0;overflow:hidden} body{background:#101f26;color:var(--ink)}
+    #scene{position:absolute;inset:0;touch-action:none} #scene canvas{display:block}
+    .vignette{position:fixed;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(7,19,26,.78),transparent 50%),linear-gradient(0deg,rgba(7,20,26,.6),transparent 30%)}
+    .top{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:25px 32px;z-index:5;pointer-events:none}
+    .brand{display:flex;align-items:center;gap:13px;font-size:13px;letter-spacing:.2em;font-weight:750}.mark{width:33px;height:33px;border:1px solid #8ac1b4;transform:rotate(45deg);display:grid;place-items:center;border-radius:5px}.mark span{display:block;transform:rotate(-45deg);font-weight:700;letter-spacing:0;font-size:16px}
+    .eyebrow{font-size:10px;color:var(--teal);letter-spacing:.22em;text-transform:uppercase;font-weight:750}
+    .top .right{font-size:11px;color:var(--dim);letter-spacing:.08em}
+    .panel{position:fixed;top:110px;left:32px;width:335px;max-height:calc(100% - 170px);overflow:auto;border:1px solid rgba(126,173,161,.2);border-radius:17px;background:rgba(11,28,35,.88);backdrop-filter:blur(18px);padding:24px 24px 18px;z-index:7;box-shadow:0 16px 80px rgba(0,0,0,.22)}
+    h1{font-family:Georgia,serif;font-size:40px;line-height:1.04;font-weight:500;letter-spacing:-.04em;margin:12px 0 13px} h1 em{font-weight:400;font-style:italic;color:var(--teal)}
+    .intro{font-size:13px;line-height:1.65;color:#a9bdba;margin-bottom:22px}
+    .section{border-top:1px solid var(--line);padding:17px 0 0;margin:17px 0 0}
+    .section-title{font-size:10px;color:#8ea8a5;font-weight:700;text-transform:uppercase;letter-spacing:.15em;margin-bottom:11px}
+    .stats{display:grid;grid-template-columns:1fr 1fr;gap:9px}.stat{border:1px solid #2a4950;border-radius:10px;padding:12px;background:#17303a}.stat strong{display:block;font-size:21px;letter-spacing:-.045em;color:#f1f3e9}.stat span{font-size:10px;color:#9fb4b1}
+    .actions{display:flex;gap:9px;flex-wrap:wrap}.button{cursor:pointer;border:1px solid #355b5e;background:#213f45;color:#e9f4ed;border-radius:9px;padding:10px 12px;font-size:12px;font-weight:650;transition:.15s}.button:hover{background:#2c5559}.button.primary{background:#a5decf;border-color:#a5decf;color:#12282d}.button.primary:hover{background:#c0f0dc}.button:disabled{opacity:.45;cursor:wait}
+    .checkline{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:12px;color:#c6d8d2;margin:12px 0}.checkline input{accent-color:#9bddcb}
+    .progress{font-size:12px;line-height:1.55;color:#c6dcd3;padding:12px;border:1px solid #32555d;background:#193741;border-radius:10px;margin-top:18px;white-space:pre-line}
+    .status-icon{display:inline-block;background:#a7deb8;width:7px;height:7px;border-radius:100%;margin-right:7px;box-shadow:0 0 12px #a7deb8}
+    .footer{position:fixed;bottom:16px;left:32px;font-size:10px;color:#bed0c8;line-height:1.6;z-index:6;max-width:510px}
+    .footer a{color:#a0e1cc}
+    .guide{position:fixed;right:32px;bottom:26px;text-align:right;color:#c2d4cf;font-size:11px;line-height:1.85;z-index:6;pointer-events:none}
+    .compass{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border:1px solid #6c9390;border-radius:50%;margin-bottom:12px;background:rgba(7,19,25,.5);font-family:serif;color:#d6eee4;font-size:20px}
+    #error{color:#f7c4b6}
+    .file{display:none}.muted{color:#859e9a}.message{font-size:12px;line-height:1.6;margin-top:8px}.info{padding:12px 14px;background:#142e37;border:1px solid #32505a;border-radius:10px;font-size:12px;line-height:1.6;color:#b9d2cf;margin-top:10px;word-break:break-word}
+    @media(max-width:760px){.top{padding:15px 18px}.top .right{display:none}.panel{top:auto;bottom:56px;left:12px;max-height:48vh;width:calc(100% - 24px);padding:17px}.panel h1{font-size:30px}.intro{display:none}.section{padding-top:11px;margin-top:11px}.guide{right:20px;bottom:auto;top:75px}.guide .hint{display:none}.footer{font-size:9px;left:18px;bottom:7px;max-width:calc(100% - 36px);background:#11252a;padding:3px}.stats .stat{padding:9px}}
+  </style>
+  <script type="importmap">
+  {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.179.1/examples/jsm/"}}
+  </script>
+</head>
+<body>
+  <div id="scene" role="img" aria-label="Gerçek OSM binalarından oluşturulmuş üç boyutlu Trabzon Meydan"></div>
+  <div class="vignette"></div>
+  <header class="top"><div class="brand"><div class="mark"><span>T</span></div><span>ISOMETRIC TRABZON</span></div><div class="right">REAL GEOMETRY · PILOT 01 / ORTAHISAR</div></header>
+  <aside class="panel">
+    <div class="eyebrow">Karadeniz'den bir şehir portresi</div>
+    <h1>Trabzon, <em>yukarıdan.</em></h1>
+    <div class="intro">Gerçek sokak ve bina geometrilerinden üretilen interaktif izometrik şehir. İlk durak: Meydan.</div>
+    <div class="stats"><div class="stat"><strong id="building-count">—</strong><span>Gerçek bina izi</span></div><div class="stat"><strong id="road-count">—</strong><span>Yol çizgisi</span></div><div class="stat"><strong id="height-count">—</strong><span>Yükseklik / kat etiketi</span></div><div class="stat"><strong id="elev-count">—</strong><span>Arazi kot farkı</span></div></div>
+    <div id="status" class="progress"><span class="status-icon"></span>Veri bekleniyor…</div>
+    <div class="section"><div class="section-title">Harita kontrolleri</div>
+      <div class="actions"><button id="reset" class="button">İzometrik açı</button><button id="capture" class="button">PNG kaydet</button><button id="reload" class="button primary">Veriyi yenile</button></div>
+      <label class="checkline">Bina kenar çizgileri <input type="checkbox" id="edges" checked></label>
+      <label class="checkline">Arazi kabartması <input type="checkbox" id="terrain" checked></label>
+      <button class="button" id="loadfile">GeoJSON dosyası aç</button><input class="file" id="file" type="file" accept=".json,.geojson,application/json">
+    </div>
+    <div class="section"><div class="section-title">Seçilen yapı</div><div id="pick" class="message muted">Bir binaya tıklayıp kaynak bilgilerini incele.</div></div>
+    <div class="section"><div class="section-title">Veri dürüstlüğü</div><div class="message muted">Bina oturumu: OSM gerçek koordinatı. Yüksekliği belirtilmeyen binalar tahminidir. Çatı ve cephe görüntüleri bu sürümde gerçek fotoğraf dokusu değildir.</div></div>
+  </aside>
+  <div class="guide"><div class="compass">N</div><div class="hint">Sürükle · döndür<br>Kaydır · yakınlaştır<br>Sağ tık · haritayı taşı</div></div>
+  <div class="footer">Coğrafi veri: © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap katkıcıları</a> (ODbL). Arazi: <a href="https://registry.opendata.aws/terrain-tiles/" target="_blank" rel="noopener noreferrer">Mapzen Terrain Tiles</a> ve kaynak sağlayıcıları. <span id="mode">Açık veri pilotu</span></div>
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>
