@@ -21,7 +21,7 @@ Tarayıcı: **http://localhost:8000**
 
 İlk Python komutu OSM Overpass sunucularından canlı bina ve yol geometrisi indirir; ikincisi Mapzen AWS açık veri karolarından gerçek yükselti alır. İndirme internet bağlantısı ister. İlk denemede Overpass sunucuları yoğun olabilir; birkaç dakika sonra tekrar deneyin. Ek ücretli API anahtarı gerekmez.
 
-Arazi servisine ulaşamıyorsanız `python scripts/fetch_open_data.py --no-terrain` ile düz zeminli sürümü oluşturabilirsiniz.
+Arazi servisi erişilemezse Python betiği bunu raporlar; site gerçek bina verileriyle düz zeminde açılır.
 
 ## 2. Görüntüleme
 
@@ -83,3 +83,7 @@ node --check src/app.js
 ## GitHub Pages
 
 GitHub Actions iş akışı otomatik olarak açık OSM ve Mapzen verilerini indirip siteyi GitHub Pages'e dağıtır. Depo Settings → Pages → Source: GitHub Actions olarak ayarlanmalıdır. Private repo için uygun GitHub planı gereklidir.
+
+## Yayın durumu ve ilk etkinleştirme
+
+GitHub Actions gerçek verileri başarıyla indirdi (2026-10-31: 1466 bina, 422 yol, 23 park/su alanı). Yayın için GitHub deposunda **Settings → Pages → Build and deployment → Source: GitHub Actions** ayarı manuel olarak seçilmeli. Sonra **Actions → Deploy Isometric Trabzon to GitHub Pages → Run workflow** kullanın. Proje deposu private olduğundan GitHub Free hesabında önce public yapılması gerekir (GitHub Pro/Team/Enterprise private depolarda Pages destekler). Beklenen site adresi: https://receptopalak.github.io/isometrictrabzon/ . Bu bağlantı Pages etkinleştirilene kadar aktif değildir.
