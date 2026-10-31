@@ -135,6 +135,34 @@ def collect():
     except Exception as exc:
         failures.append("Curated Commons metadata: " + str(exc))
 
+    if not results:
+        # Explicitly verified Wikimedia Commons originals, with source and licence.
+        # These lack independently verified coordinates; they are gallery-only.
+        seeds = [
+            ("Trabzon,AtatürkAlani.jpg", "Bertramz", "CC BY-SA 3.0", "https://creativecommons.org/licenses/by-sa/3.0/"),
+            ("Trabzon Meydan Park (1).jpg", "Radosław Botev", "CC BY 3.0 PL", "https://creativecommons.org/licenses/by/3.0/pl/"),
+            ("Trabzon Meydan Park (3).jpg", "Radosław Botev", "CC BY 3.0 PL", "https://creativecommons.org/licenses/by/3.0/pl/"),
+            ("Trabzon Meydan Park (4).jpg", "Radosław Botev", "CC BY 3.0 PL", "https://creativecommons.org/licenses/by/3.0/pl/"),
+            ("Trabzon Meydan 2.jpg", "edkohler", "CC BY 2.0", "https://creativecommons.org/licenses/by/2.0/"),
+            ("Ataturk statue, Trabzon Meydan.jpg", "PlanetKorriban", "CC BY-SA 2.0", "https://creativecommons.org/licenses/by-sa/2.0/"),
+            ("Trabzon Meydan Parkı Atatürk Heykeli 0005.jpg", "Dosseman", "CC BY-SA 4.0", "https://creativecommons.org/licenses/by-sa/4.0/"),
+        ]
+        for filename, author, license_name, license_url in seeds:
+            title = "File:" + filename
+            results[title] = {
+                "id": title,
+                "title": filename.rsplit(".", 1)[0],
+                "author": author,
+                "license": license_name,
+                "license_url": license_url,
+                "url": "https://commons.wikimedia.org/wiki/" + quote(title.replace(" ", "_")),
+                "image": "https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/" + quote(filename.replace(" ", "_")) + "&width=900",
+                "lat": None, "lon": None, "geotagged": False,
+                "area": "Trabzon Meydan — doğrulanmış fotoğraf",
+                "source": "Wikimedia Commons",
+                "date": "",
+            }
+        print("Using individually verified licensed photo fallback.", flush=True)
     ordered = sorted(results.values(), key=lambda p: (not p["geotagged"], p["title"].lower()))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     result = {
