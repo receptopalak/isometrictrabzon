@@ -23,6 +23,7 @@ OPEN = ("CC-BY-", "CC BY ", "CC-BY-SA", "CC BY-SA", "CC0", "PUBLIC DOMAIN")
 def ask(session, bbox):
     resp = session.get(API, params={
         "bbox": ",".join(map(str, bbox)),
+        "collections": "openaerialmap",
         "limit": 100,
     }, timeout=(10, 60))
     resp.raise_for_status()
