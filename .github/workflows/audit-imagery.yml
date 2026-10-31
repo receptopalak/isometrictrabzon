@@ -1,0 +1,29 @@
+name: Audit Free Trabzon Aerial Imagery
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - scripts/audit_open_imagery.py
+      - .github/workflows/audit-imagery.yml
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install "requests>=2.31,<3"
+      - name: Scan public imagery catalogue around Trabzon Meydan
+        run: python scripts/audit_open_imagery.py
+      - name: Attach audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: trabzon-open-imagery-audit
+          path: data/open_imagery_audit.json
+          if-no-files-found: error
