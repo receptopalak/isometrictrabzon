@@ -34,6 +34,9 @@ jobs:
       - name: Download real OpenStreetMap and terrain data
         run: |
           python -m pip install -r requirements.txt
+          python -m py_compile scripts/fetch_open_data.py scripts/fetch_photos.py
+          node --input-type=module --check < src/app.js
+          node --input-type=module --check < src/photos.js
           python scripts/fetch_open_data.py
           python scripts/fetch_photos.py
           python - <<'PY'
